@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogPost from "../../components/BlogPost.astro";
+// 初次渲染頁面時執行一次
+export async function getStaticPaths() {
+  // Astro.glob("../posts/*.md") 使用API取得所有文章
+  const allPosts = await Astro.glob("../posts/*.md");
+  // 取得所有標籤並且整理成不重複的二維陣列
+  // Set資料類型自帶移除重複成員功能
+  const uniqueTags = [
+    ...new Set(allPosts.map((post) => post.frontmatter.tags).flat()),
+  ];
+
+  // 對二維陣列當中每一資料項(一維陣列)遍歷
+  return uniqueTags.map((tag) => {
+    // 比對allPosts中每一資料項中tags屬性質是否包含tag值, 把符合條件的資料項保留
+    const filteredPosts = allPosts.filter((post) =>
+      post.frontmatter.tags.includes(tag)
+    );
+    // 比對後的新filteredPosts回傳出去
+    return {
+      // 頁面網址路徑處所見tag/{值}, 對應源始碼中的tag值!!
+      params: { tag },
+      // 此處filteredPosts已與tag值關聯起來, 建立對應關係
+      props: { posts: filteredPosts },
+    };
+  });
+}
+// 取得包含tag標籤的所有關鍵字列表
+const { tag } = Astro.params;
+// 取得所有文章列表
+const { posts } = Astro.props;
+---
+
+<BaseLayout pageTitle={tag}>
+  <p>包含「{tag}」标签的文章如下</p>
+  <ul>
+    {
+      posts.map((post) => (
+        <BlogPost url={post.url} title={post.frontmatter.title} />
+      ))
+    }
+  </ul>
+</BaseLayout>

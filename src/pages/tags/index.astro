@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+// 取得全部文章陣列
+const allPosts = await Astro.glob("../posts/*.md");
+// console.log("allPosts", allPosts);
+// 取得全站關鍵字
+// new Set()將陣列中重複項移除並保留一個
+// map對陣列每一資料項皆做相同處理=>遍歷
+// flat()將二微陣列攤平成一維陣列
+const tags = [...new Set(allPosts.map((post) => post.frontmatter.tags).flat())];
+// 保存數據, 由父元件index.astro傳入給元件BaseLayout當中展示
+const pageTitle = "全站關鍵字";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <div class="tags">
+    {
+      // 遍歷並展示全站關鍵字(經去重後整理)
+      tags.map((tag) => (
+        <p class="tag">
+          <a href={`/tags/${tag}`}>{tag}</a>
+        </p>
+      ))
+    }
+  </div>
+</BaseLayout>
+<style>
+  a {
+    color: #00539f;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px auto;
+  }
+
+  .tag {
+    margin: 0.25em;
+    border: dotted 1px #a1a1a1;
+    border-radius: 0.5em;
+    padding: 0.5em 1em;
+    font-size: 1.15em;
+    background-color: #f8fcfd;
+  }
+</style>

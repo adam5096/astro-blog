@@ -1,0 +1,16 @@
+---
+// 每當有其他元件(通常是父層)使用Social元件時，就可以從Social元件標籤傳入兩個屬性值，並且在Social內解構取用
+// 下一行為固定寫法
+const {siteURL, siteTitle} = Astro.props
+---
+
+<style>
+    a{
+        padding: 0.5rem 1rem;
+        color: white;
+        background-color: #4c1d95;
+        text-decoration: none;
+    }
+</style>
+
+<a href={`https://www.${siteURL}.com`}>{siteTitle}</a>

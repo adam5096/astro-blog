@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+const pageTitle = "關於";
+const identity = {
+  name: "Adam",
+  occupation: "Web FrontEnd",
+  hobbies: ["badminton", "movie", "hangout"],
+};
+const skills = ["HTML", "CSS", "JS", "Vue", "astro"];
+let isLoading = true;
+
+let skillColor = "red";
+let fontWeight = "bold";
+let textCase = "uppercase";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+  <style define:vars={{ skillColor, fontWeight, textCase }}>
+    h1 {
+      color: deepskyblue;
+      font-size: 4rem;
+    }
+    .skill {
+      color: var(--skillColor);
+      font-weight: var(--fontWeight);
+      text-transform: var(--textCase);
+    }
+  </style>
+  <h2>關於我</h2>
+  <p>稱呼: {identity.name}</p>
+  <p>我是一名: {identity.occupation}</p>
+  <p>我喜歡: {identity.hobbies[2]}</p>
+  <h2>技能:</h2>
+  <ul>
+    {skills.map((skill) => <li class="skill">{skill}</li>)}
+  </ul>
+  <h2>{isLoading ? "正在載入中" : "載入完成"}</h2>
+</BaseLayout>
