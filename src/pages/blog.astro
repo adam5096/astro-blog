@@ -1,9 +1,12 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import BlogPost from "../components/BlogPost.astro";
 const pageTitle = "文章";
+
 // 使用Astro內建API讀取全部文章檔案, 取得後往本地allPosts保存
-const allPosts = await Astro.glob("./posts/*.md");
+// const allPosts = await Astro.glob("./posts/*.md");
+const allPosts = await getCollection("posts");
 ---
 
 <BaseLayout pageTitle={pageTitle}>
@@ -16,10 +19,11 @@ const allPosts = await Astro.glob("./posts/*.md");
     {
       allPosts.map((post) => (
         // 把li結構拆分寫成元件
-        <BlogPost url={post.url} title={post.frontmatter.title} />
         // <li>
         //   <a href={post.url}>{post.frontmatter.title}</a>
         // </li>
+        // <BlogPost url={post.url} title={post.frontmatter.title} />
+        <BlogPost url={`/posts/${post.slug}/`} title={post.data.title} />
       ))
     }
   </ul>

@@ -14,6 +14,7 @@ const { frontmatter } = Astro.props;
 
   <div class="tags">
     {
+      // 從當前部落格的frontmatter中讀取並顯示關鍵字tag
       frontmatter.tags.map((tag) => (
         <p class="tag">
           <a href={`/tags/${tag}`}>{tag}</a>

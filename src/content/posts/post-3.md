@@ -1,5 +1,4 @@
 ---
-layout: "../../layouts/MarkdownPostLayout.astro"
 title: "我的第3篇文章"
 pubDate: 2024-07-11
 description: "這是我的部落格中第3篇文章."

@@ -1,5 +1,4 @@
 ---
-layout: ../../layouts/MarkdownPostLayout.astro
 title: '我的第4篇文章'
 author: 'Astro 學習者'
 description: "這篇文章會自己出現在列表中！"
